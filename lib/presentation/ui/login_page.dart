@@ -16,7 +16,6 @@ class LoginPage extends StatelessWidget {
             if (state.loading) {
               return const CircularProgressIndicator();
             }
-
             return ElevatedButton(
               onPressed: () {
                 context.read<AuthBloc>().login(

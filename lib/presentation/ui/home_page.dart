@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dashboard_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -53,14 +55,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text("Dashboard"));
-  }
-}
 
 class EmployeeManagementPage extends StatelessWidget {
   const EmployeeManagementPage({super.key});
