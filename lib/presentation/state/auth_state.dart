@@ -1,25 +1,26 @@
-import '../../data/network/login_response.dart';
-
 class AuthState {
   final bool loading;
-  final LoginResponse? data;
   final String? error;
-
+  final bool authenticated;
+  final bool registrationSuccess;
   const AuthState({
     this.loading = false,
-    this.data,
     this.error,
+    this.authenticated = false,
+    this.registrationSuccess = false,
   });
 
   AuthState copyWith({
     bool? loading,
-    LoginResponse? data,
     String? error,
+    bool? authenticated,
+    bool? registrationSuccess,
   }) {
     return AuthState(
       loading: loading ?? this.loading,
-      data: data ?? this.data,
       error: error,
+      authenticated: authenticated ?? this.authenticated,
+      registrationSuccess: registrationSuccess ?? false,
     );
   }
 }
