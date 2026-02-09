@@ -24,6 +24,34 @@ class DashboardPage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 540),
               child: AttendanceChart(),
             ),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 850, start: 15,bottom:20,end: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Quick Actions",
+                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                  ),
+                  QuickActionsGrid(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 1200, start: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Recent Activity",
+                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  RecentActivityList(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -232,12 +260,7 @@ class AttendanceChart extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-          )
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,10 +273,7 @@ class AttendanceChart extends StatelessWidget {
                 children: const [
                   Text(
                     "This Week",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 4),
                   Text(
@@ -356,6 +376,178 @@ class AttendanceChart extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class QuickActionsGrid extends StatelessWidget {
+  const QuickActionsGrid({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 12,
+      crossAxisSpacing: 12,
+      childAspectRatio: 1.6,
+      children: const [
+        QuickActionCard(
+          title: "Check In",
+          icon: Icons.access_time,
+          color: Color(0xFFEFF5FF),
+          iconColor: Colors.blue,
+        ),
+        QuickActionCard(
+          title: "Team",
+          icon: Icons.group,
+          color: Color(0xFFF6F0FF),
+          iconColor: Colors.purple,
+        ),
+        QuickActionCard(
+          title: "Tasks",
+          icon: Icons.radio_button_checked,
+          color: Color(0xFFEFFAF3),
+          iconColor: Colors.green,
+        ),
+        QuickActionCard(
+          title: "Payroll",
+          icon: Icons.attach_money,
+          color: Color(0xFFFFF6EB),
+          iconColor: Colors.orange,
+        ),
+      ],
+    );
+  }
+}
+
+class QuickActionCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Color color;
+  final Color iconColor;
+
+  const QuickActionCard({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.color,
+    required this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: iconColor, size: 28),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.w600, color: iconColor),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RecentActivityList extends StatelessWidget {
+  const RecentActivityList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: const [
+        ActivityTile(
+          icon: Icons.access_time,
+          iconBg: Color(0xFFE6F4EA),
+          title: "Sarah Johnson checked in",
+          time: "2 minutes ago",
+          iconColor: Colors.green,
+        ),
+        ActivityTile(
+          icon: Icons.person_add,
+          iconBg: Color(0xFFEFF5FF),
+          title: "New employee added",
+          time: "1 hour ago",
+          iconColor: Colors.blue,
+        ),
+        ActivityTile(
+          icon: Icons.radio_button_checked,
+          iconBg: Color(0xFFF6F0FF),
+          title: "Leave request approved",
+          time: "3 hours ago",
+          iconColor: Colors.purple,
+        ),
+      ],
+    );
+  }
+}
+
+class ActivityTile extends StatelessWidget {
+  final IconData icon;
+  final Color iconBg;
+  final Color iconColor;
+  final String title;
+  final String time;
+
+  const ActivityTile({
+    super.key,
+    required this.icon,
+    required this.iconBg,
+    required this.iconColor,
+    required this.title,
+    required this.time,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsetsDirectional.only(
+        start: 10,
+        end: 10,
+        top: 5,
+        bottom: 5,
+      ),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.black12.withOpacity(0.05)),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: iconBg,
+            child: Icon(icon, color: iconColor, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  time,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
             ),
           ),
         ],

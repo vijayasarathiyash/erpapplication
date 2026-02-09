@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       create: (_) => authBloc,
       child: MaterialApp(
         title: 'Auth Demo',
-        home: const LoginPage(),
+        home: const HomePage(),
         routes: { '/home': (_) => const HomePage() }
       ),
     );
