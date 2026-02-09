@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'dashboard_page.dart';
+import 'employee dashboard/employee_management_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,10 +38,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.badge),
-            label: 'Employee',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.badge), label: 'Employee'),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
             label: 'Attendance',
@@ -52,16 +50,6 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
-  }
-}
-
-
-class EmployeeManagementPage extends StatelessWidget {
-  const EmployeeManagementPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text("Employee Management"));
   }
 }
 
