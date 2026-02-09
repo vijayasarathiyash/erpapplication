@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,17 @@ class DashboardPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-             _HeaderSection(),
+            _HeaderSection(),
             Padding(
               padding: const EdgeInsets.only(top: 200),
               child: Container(
                 margin: const EdgeInsets.only(top: 8),
                 child: _StriteGrid(),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 540),
+              child: AttendanceChart(),
             ),
           ],
         ),
@@ -128,11 +133,7 @@ class _StatCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2)),
         ],
       ),
       child: Column(
@@ -141,10 +142,7 @@ class _StatCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 4),
           Row(
@@ -159,10 +157,7 @@ class _StatCard extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 subTitle,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.green,
-                ),
+                style: const TextStyle(fontSize: 12, color: Colors.green),
               ),
             ],
           ),
@@ -171,7 +166,6 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
-
 
 class _TopInfoCard extends StatelessWidget {
   final String title;
@@ -220,6 +214,148 @@ class _TopInfoCard extends StatelessWidget {
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AttendanceChart extends StatelessWidget {
+  const AttendanceChart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+          )
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "This Week",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    "Attendance trend",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+              const Text(
+                "94%",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 180,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: LineChart(
+                LineChartData(
+                  minX: 0,
+                  maxX: 4,
+                  minY: 88,
+                  maxY: 96,
+
+                  gridData: FlGridData(show: false),
+                  borderData: FlBorderData(show: false),
+
+                  titlesData: FlTitlesData(
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    topTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    rightTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        interval: 1,
+                        getTitlesWidget: (value, meta) {
+                          if (value % 1 != 0) {
+                            return const SizedBox.shrink();
+                          }
+
+                          const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
+                          if (value < 0 || value > 4) {
+                            return const SizedBox.shrink();
+                          }
+
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              days[value.toInt()],
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: const [
+                        FlSpot(0, 90),
+                        FlSpot(1, 92),
+                        FlSpot(2, 91),
+                        FlSpot(3, 94),
+                        FlSpot(4, 93),
+                      ],
+                      isCurved: true,
+                      color: Colors.blue,
+                      barWidth: 3,
+                      dotData: FlDotData(
+                        show: true,
+                        getDotPainter: (spot, percent, barData, index) {
+                          return FlDotCirclePainter(
+                            radius: 5,
+                            color: Colors.white,
+                            strokeWidth: 3,
+                            strokeColor: Colors.blue,
+                          );
+                        },
+                      ),
+                      belowBarData: BarAreaData(show: false),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
