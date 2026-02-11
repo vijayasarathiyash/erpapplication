@@ -1,5 +1,6 @@
 import 'package:erpapplication/presentation/bloc/auth_bloc.dart';
 import 'package:erpapplication/presentation/ui/home_page.dart';
+import 'package:erpapplication/presentation/ui/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -35,9 +36,9 @@ class MyApp extends StatelessWidget {
     return BlocProvider<AuthBloc>(
       create: (_) => authBloc,
       child: MaterialApp(
-        title: 'Auth Demo',
-        home: const HomePage(),
-        routes: { '/home': (_) => const HomePage() }
+          title: 'Auth Demo',
+          home: const LoginPage(),
+          routes: { '/home': (_) => const HomePage()}
       ),
     );
   }
