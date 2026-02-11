@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../employee/ui/EmployeePage.dart';
 import 'dashboard_page.dart';
 import 'employee dashboard/employee_management_page.dart';
 
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = const [
     DashboardPage(),
-    EmployeeManagementPage(),
+    EmployeePage(),
     AttendanceManagementPage(),
     SettingsPage(),
   ];
