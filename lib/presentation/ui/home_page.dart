@@ -1,3 +1,4 @@
+import 'package:erpapplication/presentation/ui/crm/crm_toopbarView.dart';
 import 'package:flutter/material.dart';
 
 import 'dashboard_page.dart';
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     DashboardPage(),
     EmployeeManagementPage(),
     AttendanceManagementPage(),
-    SettingsPage(),
+    CrmToopbarview(),
   ];
 
   @override
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Settings',
+            label: 'CRM',
           ),
         ],
       ),
