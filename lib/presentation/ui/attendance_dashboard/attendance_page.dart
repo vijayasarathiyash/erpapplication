@@ -3,6 +3,7 @@ import 'package:erpapplication/presentation/ui/attendance_dashboard/summary_item
 import 'package:erpapplication/presentation/ui/attendance_dashboard/weekely_progress_bar_item.dart';
 import 'package:flutter/material.dart';
 
+import '../../../domain/usecase/attendance_dashboard_usecase.dart';
 import 'attendance_list_item.dart';
 
 class AttendanceManagementPage extends StatelessWidget {
@@ -23,8 +24,10 @@ class AttendanceManagementPage extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text("This Week",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              child: Text(
+                "This Week",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
 
             _buildWeeklyList(),
@@ -37,25 +40,47 @@ class AttendanceManagementPage extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 28, horizontal: 16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [Color(0xFF0A6BFF), Color(0xFF116BFF)]),
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-      ),
-      child: Column(
-        children: [
-          Text("Current Time", style: TextStyle(color: Colors.white70)),
-          Text("11:39 AM",
-              style:
-              TextStyle(fontSize: 42, fontWeight: FontWeight.bold, color: Colors.white)),
-          Text("Thursday, February 5, 2026", style: TextStyle(color: Colors.white70)),
-          SizedBox(height: 24),
-          _todayHoursCard(),
-          SizedBox(height: 16),
-          _checkInButton(),
-        ],
-      ),
+    return StreamBuilder<DateTime>(
+      stream: Stream.periodic(Duration(seconds: 1), (_) => DateTime.now()),
+      builder: (context, snapshot) {
+        final now = snapshot.data ?? DateTime.now();
+
+        final attendanceUseCase = AttendanceTimeUseCase().executeFrom(now);
+
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 28, horizontal: 16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF0A6BFF), Color(0xFF116BFF)],
+            ),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+          ),
+          child: Column(
+            children: [
+              Text("Current Time", style: TextStyle(color: Colors.white70)),
+
+              Text(
+                attendanceUseCase.time,
+                style: TextStyle(
+                  fontSize: 42,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+
+              Text(
+                attendanceUseCase.date,
+                style: TextStyle(color: Colors.white70),
+              ),
+
+              SizedBox(height: 24),
+              _todayHoursCard(),
+              SizedBox(height: 16),
+              _checkInButton(),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -100,36 +125,47 @@ class AttendanceManagementPage extends StatelessWidget {
   Widget _buildSummary() {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text("Today's Summary",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Today's Summary",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
                 child: SummaryItem(
-                    icon: Icons.check_circle,
-                    iconColor: Colors.green,
-                    count: "143",
-                    label: "Present")),
-            SizedBox(width: 12),
-            Expanded(
+                  icon: Icons.check_circle,
+                  iconColor: Colors.green,
+                  count: "143",
+                  label: "Present",
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
                 child: SummaryItem(
-                    icon: Icons.error_outline,
-                    iconColor: Colors.orange,
-                    count: "5",
-                    label: "Late")),
-            SizedBox(width: 12),
-            Expanded(
+                  icon: Icons.error_outline,
+                  iconColor: Colors.orange,
+                  count: "5",
+                  label: "Late",
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
                 child: SummaryItem(
-                    icon: Icons.cancel_outlined,
-                    iconColor: Colors.red,
-                    count: "7",
-                    label: "Absent")),
-          ],
-        ),
-      ]),
+                  icon: Icons.cancel_outlined,
+                  iconColor: Colors.red,
+                  count: "7",
+                  label: "Absent",
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -176,32 +212,45 @@ class AttendanceManagementPage extends StatelessWidget {
   Widget _buildAttendanceList() {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Today's Attendance",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Text("View All", style: TextStyle(color: Colors.blue)),
-          ],
-        ),
-        SizedBox(height: 16),
-        AttendanceItem(
-          initials: "SJ",
-          name: "Sarah Johnson",
-          time: "09:00 AM",
-          status: "Present",
-          location: "Office",
-        ),
-        SizedBox(height: 12),
-        AttendanceItem(
-          initials: "MC",
-          name: "Michael Chen",
-          time: "08:45 AM → 05:30 PM",
-          status: "Present",
-          location: "Office",
-        ),
-      ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Today's Attendance",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Text("View All", style: TextStyle(color: Colors.blue)),
+            ],
+          ),
+          SizedBox(height: 16),
+          AttendanceItem(
+            initials: "SS",
+            name: "Shardullya Singh",
+            time: "09:00 AM",
+            status: "Present",
+            location: "Office",
+          ),
+          SizedBox(height: 12),
+          AttendanceItem(
+            initials: "MC",
+            name: "Omkar Shinde",
+            time: "08:45 AM → 05:30 PM",
+            status: "Present",
+            location: "Office",
+          ),
+          SizedBox(height: 12),
+          AttendanceItem(
+            initials: "V",
+            name: "VijaySarthi",
+            time: "08:49 AM → 06:22 PM",
+            status: "Present",
+            location: "Office",
+          ),
+        ],
+      ),
     );
   }
 }
