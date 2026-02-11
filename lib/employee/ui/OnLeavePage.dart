@@ -10,9 +10,7 @@ class OnLeavePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Employees On Leave (${leaves.length})'),
-      ),
+      appBar: AppBar(title: Text('Employees On Leave (${leaves.length})')),
       body: ListView.separated(
         padding: const EdgeInsets.all(12),
         itemCount: leaves.length,
@@ -42,7 +40,7 @@ class OnLeaveTile extends StatelessWidget {
             color: Colors.black.withOpacity(0.05),
             blurRadius: 8,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Row(
@@ -69,14 +67,9 @@ class OnLeaveTile extends StatelessWidget {
                   style: TextStyle(color: Colors.grey.shade700),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  '${_fmt(leave.fromDate)} → ${_fmt(leave.toDate)}',
-                ),
+                Text('${_fmt(leave.fromDate)} → ${_fmt(leave.toDate)}'),
                 const SizedBox(height: 4),
-                Text(
-                  'Reason: ${leave.reason}',
-                  style: TextStyle(fontSize: 13),
-                ),
+                Text('Reason: ${leave.reason}', style: TextStyle(fontSize: 13)),
               ],
             ),
           ),

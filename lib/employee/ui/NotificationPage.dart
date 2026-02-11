@@ -27,9 +27,7 @@ class NotificationPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
-      ),
+      appBar: AppBar(title: const Text('Notifications')),
       body: ListView.separated(
         padding: const EdgeInsets.all(12),
         itemCount: notifications.length,
@@ -72,7 +70,7 @@ class NotificationTile extends StatelessWidget {
             color: Colors.black.withOpacity(0.05),
             blurRadius: 8,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Row(
@@ -97,17 +95,12 @@ class NotificationTile extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   notification.description,
-                  style: TextStyle(
-                    color: Colors.grey.shade700,
-                  ),
+                  style: TextStyle(color: Colors.grey.shade700),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   _formatTime(notification.time),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade500,
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
                 ),
               ],
             ),
@@ -148,5 +141,3 @@ class AppNotification {
     this.isRead = false,
   });
 }
-
-

@@ -26,7 +26,7 @@ class EmployeeRepository {
 
       Employee(
         id: 'EMP002',
-        name: 'Rahul Patil',
+        name: 'Shardullya',
         email: 'rahul.patil@company.com',
         phone: '9822334455',
         address: 'Mumbai, Maharashtra',
@@ -47,7 +47,7 @@ class EmployeeRepository {
 
       Employee(
         id: 'EMP003',
-        name: 'Sneha Kulkarni',
+        name: 'Vijay',
         email: 'sneha.kulkarni@company.com',
         phone: '9011223344',
         address: 'Bangalore, Karnataka',
@@ -68,7 +68,7 @@ class EmployeeRepository {
 
       Employee(
         id: 'EMP004',
-        name: 'Amit Verma',
+        name: 'Shinde',
         email: 'amit.verma@company.com',
         phone: '8899776655',
         address: 'Delhi, India',

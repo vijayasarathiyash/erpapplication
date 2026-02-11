@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../model/Employee.dart';
 
 class EmployeeDetailPage extends StatelessWidget {
@@ -10,77 +9,18 @@ class EmployeeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Employee Details'),
-      ),
+      backgroundColor: const Color(0xffF8F9FB),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _ProfileHeader(employee: employee),
-            const SizedBox(height: 12),
+            _ModernTopHeader(employee: employee),
+            const SizedBox(height: 16),
             _OrganizationSection(employee: employee),
             _ExpertiseSection(employee: employee),
             _PersonalInfoSection(employee: employee),
+            const SizedBox(height: 30),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _ProfileHeader extends StatelessWidget {
-  final Employee employee;
-
-  const _ProfileHeader({required this.employee});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.indigo.shade400, Colors.indigo.shade700],
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.white,
-            child: Text(
-              employee.name[0],
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                employee.name,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                employee.designation,
-                style: const TextStyle(color: Colors.white70),
-              ),
-              Text(
-                employee.department,
-                style: const TextStyle(color: Colors.white70),
-              ),
-            ],
-          )
-        ],
       ),
     );
   }
@@ -100,10 +40,7 @@ class _OrganizationSection extends StatelessWidget {
         _DetailRow('Department', employee.department),
         _DetailRow('Designation', employee.designation),
         _DetailRow('Reporting Manager', employee.managerId),
-        _DetailRow(
-          'Status',
-          employee.isOnLeave ? 'On Leave' : 'Active',
-        ),
+        _DetailRow('Status', employee.isOnLeave ? 'On Leave' : 'Active'),
       ],
     );
   }
@@ -122,20 +59,25 @@ class _ExpertiseSection extends StatelessWidget {
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: employee.skills
-              .map(
-                (skill) => Chip(
-              label: Text(skill),
-              backgroundColor: Colors.blue.shade50,
-            ),
-          )
-              .toList(),
+          children: employee.skills.map((skill) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xffEFF6FF),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                skill,
+                style: const TextStyle(
+                  color: Color(0xff2563EB),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            );
+          }).toList(),
         ),
-        const SizedBox(height: 8),
-        _DetailRow(
-          'Experience',
-          '${employee.experience} Years',
-        ),
+        const SizedBox(height: 16),
+        _DetailRow('Experience', '${employee.experience} Years'),
       ],
     );
   }
@@ -159,29 +101,143 @@ class _PersonalInfoSection extends StatelessWidget {
   }
 }
 
+class _ModernTopHeader extends StatelessWidget {
+  final Employee employee;
+
+  const _ModernTopHeader({required this.employee});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 50, 16, 30),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xff2563EB), Color(0xff1D4ED8)],
+        ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+      ),
+      child: Column(
+        children: [
+          /// Back + Title Row
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.arrow_back, color: Colors.white),
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                "Employee Details",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 24),
+
+          /// Profile Info
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 36,
+                backgroundColor: Colors.white,
+                child: Text(
+                  employee.name[0],
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff2563EB),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      employee.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      employee.designation,
+                      style: const TextStyle(color: Colors.white70),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      employee.department,
+                      style: const TextStyle(color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
+
+              /// Status Badge
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: employee.isOnLeave
+                      ? Colors.orange.shade100
+                      : Colors.green.shade100,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  employee.isOnLeave ? "On Leave" : "Active",
+                  style: TextStyle(
+                    color: employee.isOnLeave ? Colors.orange : Colors.green,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _DetailCard extends StatelessWidget {
   final String title;
   final List<Widget> children;
 
-  const _DetailCard({
-    required this.title,
-    required this.children,
-  });
+  const _DetailCard({required this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-          )
+            color: Colors.grey.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
         ],
       ),
       child: Column(
@@ -189,12 +245,9 @@ class _DetailCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           ...children,
         ],
       ),
@@ -211,7 +264,7 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -219,8 +272,8 @@ class _DetailRow extends StatelessWidget {
             width: 140,
             child: Text(
               label,
-              style: TextStyle(
-                color: Colors.grey.shade600,
+              style: const TextStyle(
+                color: Colors.grey,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -236,4 +289,3 @@ class _DetailRow extends StatelessWidget {
     );
   }
 }
-

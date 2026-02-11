@@ -12,8 +12,7 @@ class VerticalAutoScrollText extends StatefulWidget {
   });
 
   @override
-  State<VerticalAutoScrollText> createState() =>
-      _VerticalAutoScrollTextState();
+  State<VerticalAutoScrollText> createState() => _VerticalAutoScrollTextState();
 }
 
 class _VerticalAutoScrollTextState extends State<VerticalAutoScrollText> {
@@ -51,20 +50,17 @@ class _VerticalAutoScrollTextState extends State<VerticalAutoScrollText> {
       child: widget.items.length == 1
           ? Text(widget.items.first, style: widget.textStyle)
           : PageView.builder(
-        controller: _controller,
-        scrollDirection: Axis.vertical,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: widget.items.length,
-        itemBuilder: (_, index) {
-          return Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              widget.items[index],
-              style: widget.textStyle,
+              controller: _controller,
+              scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: widget.items.length,
+              itemBuilder: (_, index) {
+                return Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(widget.items[index], style: widget.textStyle),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

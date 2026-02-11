@@ -8,8 +8,8 @@ class LeaveRepository {
         id: 'l1',
         employeeId: 'e1',
         employeeName: 'Rahul Sharma',
-        fromDate: DateTime(2026, 2, 5),
-        toDate: DateTime(2026, 2, 7),
+        fromDate: DateTime(2026, 2, 11),
+        toDate: DateTime(2026, 2, 11),
         leaveType: 'CL',
         reason: 'Personal work',
         status: 'Approved',
@@ -18,8 +18,8 @@ class LeaveRepository {
         id: 'l2',
         employeeId: 'e2',
         employeeName: 'Priya Patel',
-        fromDate: DateTime(2026, 2, 6),
-        toDate: DateTime(2026, 2, 6),
+        fromDate: DateTime(2026, 2, 11),
+        toDate: DateTime(2026, 2, 11),
         leaveType: 'SL',
         reason: 'Fever',
         status: 'Approved',
@@ -31,12 +31,8 @@ class LeaveRepository {
     final today = DateTime.now();
 
     return getAllLeaves().where((leave) {
-      return today.isAfter(
-        leave.fromDate.subtract(const Duration(days: 1)),
-      ) &&
-          today.isBefore(
-            leave.toDate.add(const Duration(days: 1)),
-          ) &&
+      return today.isAfter(leave.fromDate.subtract(const Duration(days: 1))) &&
+          today.isBefore(leave.toDate.add(const Duration(days: 1))) &&
           leave.status == 'Approved';
     }).toList();
   }
