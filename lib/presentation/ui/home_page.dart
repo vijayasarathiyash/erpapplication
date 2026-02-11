@@ -2,8 +2,8 @@ import 'package:erpapplication/presentation/ui/crm/crm_toopbarView.dart';
 import 'package:flutter/material.dart';
 
 import '../../employee/ui/EmployeePage.dart';
+import 'attendance_dashboard/attendance_page.dart';
 import 'dashboard_page.dart';
-import 'employee dashboard/employee_management_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -45,22 +45,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.people),
             label: 'Attendance',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'CRM',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'CRM'),
         ],
       ),
     );
-  }
-}
-
-class AttendanceManagementPage extends StatelessWidget {
-  const AttendanceManagementPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text("AttendanceManagement Page"));
   }
 }
 
