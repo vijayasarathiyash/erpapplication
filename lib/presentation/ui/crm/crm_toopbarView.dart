@@ -13,7 +13,7 @@ class CrmToopbarview extends StatelessWidget {
           children: [
             _header(),
             const SizedBox(height: 10),
-            _tabs(),
+            TabBarWidget(),
             SizedBox(height: 5),
             _SearchBar(),
             SizedBox(height: 5),
@@ -162,46 +162,70 @@ class StatCard extends StatelessWidget {
   }
 }
 
-Widget _tabs() {
-  return Container(
-    margin: const EdgeInsets.all(16),
-    padding: const EdgeInsets.all(4),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: Row(
+class TabBarWidget extends StatefulWidget {
+  const TabBarWidget({super.key});
+
+  @override
+  State<TabBarWidget> createState() => _TabBarWidgetState();
+}
+
+class _TabBarWidgetState extends State<TabBarWidget> {
+  int selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
       children: [
-        TabButton(title: "customer", selected: true),
-        TabButton(title: "Deals"),
-        TabButton(title: "Activity"),
+        TabButton(
+          title: "Customer",
+          selected: selectedIndex == 0,
+          onTap: () => setState(() => selectedIndex = 0),
+        ),
+        TabButton(
+          title: "Deals",
+          selected: selectedIndex == 1,
+          onTap: () => setState(() => selectedIndex = 1),
+        ),
+        TabButton(
+          title: "Activity",
+          selected: selectedIndex == 2,
+          onTap: () => setState(() => selectedIndex = 2),
+        ),
       ],
-    ),
-  );
+    );
+  }
 }
 
 class TabButton extends StatelessWidget {
   final String title;
-
   final bool selected;
+  final VoidCallback onTap;
 
-  const TabButton({super.key, required this.title, this.selected = false});
+  const TabButton({
+    super.key,
+    required this.title,
+    required this.onTap,
+    this.selected = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: selected ? Colors.grey.shade100 : Colors.transparent,
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: selected ? Colors.black : Colors.grey,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: selected ? Colors.grey.shade200 : Colors.transparent,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: selected ? Colors.black : Colors.grey,
+            ),
           ),
         ),
       ),

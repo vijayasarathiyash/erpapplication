@@ -1,4 +1,5 @@
 import 'package:erpapplication/presentation/bloc/auth_bloc.dart';
+import 'package:erpapplication/presentation/ui/SplashScreen.dart';
 import 'package:erpapplication/presentation/ui/home_page.dart';
 import 'package:erpapplication/presentation/ui/login_page.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +37,9 @@ class MyApp extends StatelessWidget {
     return BlocProvider<AuthBloc>(
       create: (_) => authBloc,
       child: MaterialApp(
-          title: 'Auth Demo',
-          home: const LoginPage(),
-          routes: { '/home': (_) => const HomePage()}
+        title: 'Auth Demo',
+        home: const SplashScreen(),
+        routes: {'/home': (_) => const HomePage()},
       ),
     );
   }
