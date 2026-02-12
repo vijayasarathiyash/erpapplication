@@ -38,7 +38,6 @@ class Employee {
   });
 }
 
-
 class Leave {
   final String id;
   final String employeeId;
@@ -62,7 +61,5 @@ class Leave {
     required this.status,
   });
 
-  int get totalDays =>
-      toDate.difference(fromDate).inDays + 1;
+  int get totalDays => toDate.difference(fromDate).inDays + 1;
 }
-

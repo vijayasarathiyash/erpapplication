@@ -14,19 +14,19 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     on<SearchEmployee>(_onSearchEmployee);
   }
 
-  void _onLoadEmployees(
-      LoadEmployees event, Emitter<EmployeeState> emit) {
+  void _onLoadEmployees(LoadEmployees event, Emitter<EmployeeState> emit) {
     emit(EmployeeLoading());
     _allEmployees = repository.fetchEmployees();
     emit(EmployeeLoaded(_allEmployees));
   }
 
-  void _onSearchEmployee(
-      SearchEmployee event, Emitter<EmployeeState> emit) {
+  void _onSearchEmployee(SearchEmployee event, Emitter<EmployeeState> emit) {
     final filtered = _allEmployees
-        .where((e) =>
-    e.name.toLowerCase().contains(event.query.toLowerCase()) ||
-        e.department.toLowerCase().contains(event.query.toLowerCase()))
+        .where(
+          (e) =>
+              e.name.toLowerCase().contains(event.query.toLowerCase()) ||
+              e.department.toLowerCase().contains(event.query.toLowerCase()),
+        )
         .toList();
 
     emit(EmployeeLoaded(filtered));
