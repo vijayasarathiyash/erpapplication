@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/Employee.dart';
+import '../model/EmployeeModel.dart';
 
 class OnLeavePage extends StatelessWidget {
   final List<Leave> leaves;

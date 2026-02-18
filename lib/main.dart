@@ -2,17 +2,23 @@ import 'package:erpapplication/presentation/bloc/auth_bloc.dart';
 import 'package:erpapplication/presentation/ui/SplashScreen.dart';
 import 'package:erpapplication/presentation/ui/home_page.dart';
 import 'package:erpapplication/presentation/ui/login_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'data/model/user_model.dart';
 import 'data/repository/auth_repositoryImpl.dart';
 import 'domain/usecase/login_usecase.dart';
 import 'domain/usecase/register_user.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
 
@@ -22,10 +28,14 @@ Future<void> main() async {
   final loginUser = LoginUser(authRepository);
   final registerUser = RegisterUser(authRepository);
 
-  final authBloc = AuthBloc(loginUser: loginUser, registerUser: registerUser);
+  final authBloc = AuthBloc(
+    loginUser: loginUser,
+    registerUser: registerUser,
+  );
 
   runApp(MyApp(authBloc: authBloc));
 }
+
 
 class MyApp extends StatelessWidget {
   final AuthBloc authBloc;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../model/Employee.dart';
+import '../model/EmployeeModel.dart';
 
 class EmployeeDetailPage extends StatelessWidget {
-  final Employee employee;
+  final EmployeeModel employee;
 
   const EmployeeDetailPage({super.key, required this.employee});
 
@@ -27,7 +27,7 @@ class EmployeeDetailPage extends StatelessWidget {
 }
 
 class _OrganizationSection extends StatelessWidget {
-  final Employee employee;
+  final EmployeeModel employee;
 
   const _OrganizationSection({required this.employee});
 
@@ -47,7 +47,7 @@ class _OrganizationSection extends StatelessWidget {
 }
 
 class _ExpertiseSection extends StatelessWidget {
-  final Employee employee;
+  final EmployeeModel employee;
 
   const _ExpertiseSection({required this.employee});
 
@@ -84,7 +84,7 @@ class _ExpertiseSection extends StatelessWidget {
 }
 
 class _PersonalInfoSection extends StatelessWidget {
-  final Employee employee;
+  final EmployeeModel employee;
 
   const _PersonalInfoSection({required this.employee});
 
@@ -102,7 +102,7 @@ class _PersonalInfoSection extends StatelessWidget {
 }
 
 class _ModernTopHeader extends StatelessWidget {
-  final Employee employee;
+  final EmployeeModel employee;
 
   const _ModernTopHeader({required this.employee});
 

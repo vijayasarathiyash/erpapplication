@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../presentation/ui/employee dashboard/add_employee_page.dart';
 import '../controller/EmployeeBloc.dart';
 import '../model/EmployeeRepository.dart';
 import '../model/LeaveRepository.dart';
@@ -244,24 +245,39 @@ class _HeaderSection extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Row(
-              children: const [
-                Icon(Icons.add, color: Colors.white, size: 18),
-                SizedBox(width: 6),
-                Text(
-                  "Add",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
+
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BlocProvider.value(
+                    value: context.read<EmployeeBloc>(),
+                    child: const AddEmployeePage(),
                   ),
                 ),
-              ],
+              );
+            },
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Row(
+                children: const [
+                  Icon(Icons.add, color: Colors.white, size: 18),
+                  SizedBox(width: 6),
+                  Text(
+                    "Add",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'Employee.dart';
+import 'EmployeeModel.dart';
 
 abstract class EmployeeState extends Equatable {
   @override
@@ -12,7 +12,7 @@ class EmployeeInitial extends EmployeeState {}
 class EmployeeLoading extends EmployeeState {}
 
 class EmployeeLoaded extends EmployeeState {
-  final List<Employee> employees;
+  final List<EmployeeModel> employees;
 
   EmployeeLoaded(this.employees);
 

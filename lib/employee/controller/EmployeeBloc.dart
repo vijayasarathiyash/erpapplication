@@ -1,22 +1,26 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../model/Employee.dart';
+import '../model/EmployeeModel.dart';
 import '../model/EmployeeRepository.dart';
 import '../model/EmployeeState.dart';
 import '../model/SearchEmployee.dart';
 
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   final EmployeeRepository repository;
-  List<Employee> _allEmployees = [];
+  List<EmployeeModel> _allEmployees = [];
 
   EmployeeBloc(this.repository) : super(EmployeeInitial()) {
     on<LoadEmployees>(_onLoadEmployees);
     on<SearchEmployee>(_onSearchEmployee);
+    on<AddEmployee>(_onAddEmployee);
   }
 
-  void _onLoadEmployees(LoadEmployees event, Emitter<EmployeeState> emit) {
+  Future<void> _onLoadEmployees(
+    LoadEmployees event,
+    Emitter<EmployeeState> emit,
+  ) async {
     emit(EmployeeLoading());
-    _allEmployees = repository.fetchEmployees();
+    _allEmployees = await repository.fetchEmployees();
     emit(EmployeeLoaded(_allEmployees));
   }
 
@@ -30,5 +34,22 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         .toList();
 
     emit(EmployeeLoaded(filtered));
+  }
+
+  Future<void> _onAddEmployee(
+      AddEmployee event,
+      Emitter<EmployeeState> emit,
+      ) async {
+    try {
+      emit(EmployeeLoading());
+
+      await repository.addEmployee(event.employee);
+
+      _allEmployees = await repository.fetchEmployees();
+
+      emit(EmployeeLoaded(_allEmployees));
+    } catch (e) {
+      emit(EmployeeError('Failed to add employee'));
+    }
   }
 }
